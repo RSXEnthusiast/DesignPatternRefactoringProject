@@ -26,7 +26,7 @@ public class Thief extends Hero
 		if (surprise <= .4)
 		{
 			System.out.println("Surprise attack was successful!\n" +
-								name + " gets an additional turn.");
+								getName() + " gets an additional turn.");
 			numTurns++;
 			attack(opponent);
 		}//end surprise

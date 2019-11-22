@@ -56,7 +56,7 @@ This method is called by: hero constructor
   public void readName()
   {
 		System.out.print("Enter character name: ");
-		name = Keyboard.readString();
+		setName(Keyboard.readString());
   }//end readName method
 
 /*-------------------------------------------------------
@@ -90,7 +90,7 @@ public void subtractHitPoints(int hitPoints)
 	{
 		if (defend())
 		{
-			System.out.println(name + " BLOCKED the attack!");
+			System.out.println(getName() + " BLOCKED the attack!");
 		}
 		else
 		{
@@ -114,7 +114,7 @@ This method is called by: external sources
 ---------------------------------------------------------*/
 	public void battleChoices(DungeonCharacter opponent)
 	{
-	    numTurns = attackSpeed/opponent.getAttackSpeed();
+	    numTurns = getAttackSpeed()/opponent.getAttackSpeed();
 
 		if (numTurns == 0)
 			numTurns++;
