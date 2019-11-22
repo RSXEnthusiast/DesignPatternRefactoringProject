@@ -115,6 +115,7 @@ public class Dungeon {
 			// monster's turn (provided it's still alive!)
 			if (theMonster.isAlive()) {
 				theMonster.attack(theHero);
+				theMonster.heal();
 			} else {
 				// monster isn't alive, so don't prompt to quit.
 				continue;
