@@ -1,7 +1,15 @@
 public class Warrior extends Hero {
 
+	private final static String name = "Warrior";
+	private final static int hitPoints = 125;
+	private final static int attackSpeed = 4;
+	private final static double chanceToHit = .8;
+	private final static int damageMin = 35;
+	private final static int damageMax = 60;
+	private final static double chanceToBlock = .2;
+
 	public Warrior() {
-		super("Warrior", 125, 4, .8, 35, 60, .2);
+		super(name, hitPoints, attackSpeed, chanceToHit, damageMin, damageMax, chanceToBlock);
 	}
 
 	public void battleChoices(DungeonCharacter opponent) {
