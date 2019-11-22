@@ -13,7 +13,7 @@ public abstract class Monster extends DungeonCharacter {
 	public void subtractHitPoints(int hitPoints) {
 		super.subtractHitPoints(hitPoints);
 	}
-	
+
 	public void heal() {
 		if (Math.random() <= chanceToHeal && getHitPoints() > 0) {
 			int healPoints = (int) (Math.random() * (maxHeal - minHeal + 1)) + minHeal;

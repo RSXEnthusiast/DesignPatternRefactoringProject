@@ -6,7 +6,7 @@ public class Thief extends Hero {
 	private final static int damageMin = 20;
 	private final static int damageMax = 40;
 	private final static double chanceToBlock = .5;
-	
+
 	public Thief() {
 		super(hitPoints, attackSpeed, chanceToHit, damageMin, damageMax, chanceToBlock);
 	}
