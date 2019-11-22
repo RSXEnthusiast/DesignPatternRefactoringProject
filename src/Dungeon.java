@@ -109,7 +109,7 @@ public class Dungeon {
 		System.out.println("---------------------------------------------");
 
 		// do battle
-		while (theHero.isAlive() && theMonster.isAlive() && quit != "Q") {
+		while (theHero.isAlive() && theMonster.isAlive() && !quit.equals("Q")) {
 			// hero goes first
 			theHero.battleChoices(theMonster);
 

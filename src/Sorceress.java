@@ -12,18 +12,20 @@ public class Sorceress extends Hero {
 		int choice;
 
 		do {
-			System.out.println("1. Attack Opponent");
-			System.out.println("2. Increase Hit Points");
-			System.out.print("Choose an option: ");
-			choice = Keyboard.readInt();
-
-			while (choice != 1 || choice != 2) {
+			boolean valid = false;
+			while (!valid) {
+				System.out.println("1. Attack Opponent");
+				System.out.println("2. Increase Hit Points");
+				System.out.print("Choose an option: ");
+				choice = Keyboard.readInt();
 				switch (choice) {
 				case 1:
 					attack(opponent);
+					valid = true;
 					break;
 				case 2:
 					increaseHitPoints();
+					valid = true;
 					break;
 				default:
 					System.out.println("Invalid choice, try again!");
