@@ -117,6 +117,7 @@ public class Dungeon {
 				theMonster.attack(theHero);
 				theMonster.heal();
 			} else {
+				System.out.println(theHero.getName() + " was victorious!");
 				// monster isn't alive, so don't prompt to quit.
 				continue;
 			}
@@ -125,12 +126,9 @@ public class Dungeon {
 			quit = Keyboard.readString().toUpperCase();
 		}
 
-		if (!theMonster.isAlive())
-			System.out.println(theHero.getName() + " was victorious!");
-		else if (!theHero.isAlive())
+		if (!theHero.isAlive())
 			System.out.println(theHero.getName() + " was defeated :-(");
-		else// both are alive so user quit the game
+		if (quit.equals("Q"))
 			System.out.println("Quitters never win ;-)");
-
 	}
 }
