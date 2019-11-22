@@ -1,6 +1,5 @@
 public class Sorceress extends Hero {
 
-	private final static String name = "Sorceress";
 	private final static int hitPoints = 75;
 	private final static int attackSpeed = 5;
 	private final static double chanceToHit = .7;
@@ -12,7 +11,7 @@ public class Sorceress extends Hero {
 	public final int MAX_ADD = 50;
 
 	public Sorceress() {
-		super(name, hitPoints, attackSpeed, chanceToHit, damageMin, damageMax, chanceToBlock);
+		super(hitPoints, attackSpeed, chanceToHit, damageMin, damageMax, chanceToBlock);
 	}
 
 	public void battleChoices(DungeonCharacter opponent) {

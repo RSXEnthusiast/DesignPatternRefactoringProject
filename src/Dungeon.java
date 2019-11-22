@@ -1,7 +1,6 @@
 import java.util.Random;
 
 /**
- *
  * Description: Driver file for Heroes and Monsters project
  *
  * Copyright: Copyright (c) 2001 Company: Code Dogs Inc. I.M. Knurdy
@@ -117,7 +116,7 @@ public class Dungeon {
 			if (theMonster.isAlive()) {
 				theMonster.attack(theHero);
 			} else {
-				// monster isn't alive, so skip quit prompt.
+				// monster isn't alive, so don't prompt to quit.
 				continue;
 			}
 			// let the player bail out if desired
