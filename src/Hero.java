@@ -21,11 +21,10 @@ public abstract class Hero extends DungeonCharacter {
 	private double chanceToBlock;
 	private int numTurns;
 
-	public Hero(String name, int hitPoints, int attackSpeed, double chanceToHit, int damageMin, int damageMax,
+	public Hero(int hitPoints, int attackSpeed, double chanceToHit, int damageMin, int damageMax,
 			double chanceToBlock) {
-		super(name, hitPoints, attackSpeed, chanceToHit, damageMin, damageMax);
+		super(readName(), hitPoints, attackSpeed, chanceToHit, damageMin, damageMax);
 		this.chanceToBlock = chanceToBlock;
-		readName();
 	}
 
 	/*-------------------------------------------------------
@@ -37,9 +36,9 @@ public abstract class Hero extends DungeonCharacter {
 	This method calls: nothing
 	This method is called by: hero constructor
 	---------------------------------------------------------*/
-	public void readName() {
+	public static String readName() {
 		System.out.print("Enter character name: ");
-		setName(Keyboard.readString());
+		return Keyboard.readString();
 	}
 
 	/*-------------------------------------------------------
