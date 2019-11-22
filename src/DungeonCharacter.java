@@ -125,6 +125,7 @@ public abstract class DungeonCharacter {
 	hero classes and externally
 	---------------------------------------------------------*/
 	public void attack(DungeonCharacter opponent) {
+		System.out.println(name + " jabs his kris at " + opponent.name + ":");
 		if (Math.random() <= chanceToHit) {
 			opponent.subtractHitPoints((int) (Math.random() * (damageMax - damageMin + 1)) + damageMin);
 			System.out.println();

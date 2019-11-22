@@ -31,11 +31,6 @@ public class Warrior extends Hero {
 			
 		} while (getNumTurns() > 0 && getHitPoints() > 0 && opponent.getHitPoints() > 0);
 	}
-	
-	public void attack(DungeonCharacter opponent) {
-		System.out.println(getName() + " swings a mighty sword at " + opponent.getName() + ":");
-		super.attack(opponent);
-	}
 
 	public void crushingBlow(DungeonCharacter opponent) {
 		if (Math.random() <= .4) {

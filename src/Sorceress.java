@@ -35,11 +35,6 @@ public class Sorceress extends Hero {
 		} while (getNumTurns() > 0 && getHitPoints() > 0 && opponent.getHitPoints() > 0);
 	}
 
-	public void attack(DungeonCharacter opponent) {
-		System.out.println(getName() + " casts a spell of fireball at " + opponent.getName() + ":");
-		super.attack(opponent);
-	}
-
 	public void increaseHitPoints() {
 		int hPoints = (int) (Math.random() * (MAX_ADD - MIN_ADD + 1)) + MIN_ADD;
 		addHitPoints(hPoints);

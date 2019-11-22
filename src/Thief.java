@@ -32,11 +32,6 @@ public class Thief extends Hero {
 			
 		} while (getNumTurns() > 0 && getHitPoints() > 0 && opponent.getHitPoints() > 0);
 	}
-	
-	public void attack(DungeonCharacter opponent) {
-		System.out.println(getName() + " stabs in the general direction of " + opponent.getName() + ":");
-		super.attack(opponent);
-	}
 
 	public void surpriseAttack(DungeonCharacter opponent) {
 		double surprise = Math.random();
