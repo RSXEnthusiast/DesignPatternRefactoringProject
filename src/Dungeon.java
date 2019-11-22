@@ -1,7 +1,6 @@
 import java.util.Random;
 
 /**
- * Title: Dungeon.java
  *
  * Description: Driver file for Heroes and Monsters project
  *
@@ -25,7 +24,6 @@ import java.util.Random;
  * hero to battle the monster
  * 
  * Once a battle concludes, the user has the option of repeating the above
- * 
  */
 public class Dungeon {
 	public static void main(String[] args) {
@@ -38,7 +36,7 @@ public class Dungeon {
 
 		} while (playAgain());
 		System.out.println("Thanks for playing!");
-	}// end main method
+	}
 
 	/*-------------------------------------------------------------------
 	chooseHero allows the user to select a hero, creates that hero, and
@@ -59,9 +57,9 @@ public class Dungeon {
 				return new Thief();
 			default:
 				System.out.println("invalid choice, try again.\n");
-			}// end switch
+			}
 		}
-	}// end chooseHero method
+	}
 
 	/*-------------------------------------------------------------------
 	generateMonster randomly selects a Monster and returns it.  It utilizes
@@ -76,8 +74,8 @@ public class Dungeon {
 			return new Gremlin();
 		default:
 			return new Skeleton();
-		}// end switch
-	}// end generateMonster method
+		}
+	}
 
 	/*-------------------------------------------------------------------
 	playAgain allows gets choice from user to play another game.  It returns
@@ -97,7 +95,7 @@ public class Dungeon {
 				System.out.println("Make a valid selection!\n");
 			}
 		}
-	}// end playAgain method
+	}
 
 	/*-------------------------------------------------------------------
 	battle is the actual combat portion of the game.  It requires a Hero
@@ -125,7 +123,7 @@ public class Dungeon {
 			// let the player bail out if desired
 			System.out.print("\nQ to quit, anything else to continue: ");
 			quit = Keyboard.readString().toUpperCase();
-		} // end battle loop
+		}
 
 		if (!theMonster.isAlive())
 			System.out.println(theHero.getName() + " was victorious!");
@@ -134,6 +132,5 @@ public class Dungeon {
 		else// both are alive so user quit the game
 			System.out.println("Quitters never win ;-)");
 
-	}// end battle method
-//refactored 
-}// end Dungeon class
+	}
+}

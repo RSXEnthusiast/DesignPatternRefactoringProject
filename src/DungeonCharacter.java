@@ -40,22 +40,19 @@ public abstract class DungeonCharacter {
 		this.damageMin = damageMin;
 		this.damageMax = damageMax;
 
-	}// end constructor
+	}
 
-//-----------------------------------------------------------------
 	public String getName() {
 		return name;
-	}// end getName
+	}
 
-//-----------------------------------------------------------------
 	public int getHitPoints() {
 		return hitPoints;
-	}// end getHitPoints
-//-----------------------------------------------------------------
+	}
 
 	public int getAttackSpeed() {
 		return attackSpeed;
-	}// end getAttackSpeed
+	}
 
 	/*-------------------------------------------------------
 	addHitPoints is used to increment the hitpoints a dungeon character has
@@ -71,10 +68,8 @@ public abstract class DungeonCharacter {
 			System.out.println("Hitpoint amount must be positive.");
 		else {
 			this.hitPoints += hitPoints;
-			// System.out.println("Remaining Hit Points: " + hitPoints);
-
 		}
-	}// end addHitPoints method
+	}
 
 	/*-------------------------------------------------------
 	subtractHitPoints is used to decrement the hitpoints a dungeon character has.
@@ -97,12 +92,12 @@ public abstract class DungeonCharacter {
 			System.out.println(getName() + " hit " + " for <" + hitPoints + "> points damage.");
 			System.out.println(getName() + " now has " + this.hitPoints + " hit points remaining.");
 			System.out.println();
-		} // end else if
+		}
 
 		if (this.hitPoints == 0)
 			System.out.println(getName() + " has been killed :-(");
 
-	}// end method
+	}
 
 	/*-------------------------------------------------------
 	isAlive is used to see if a character is still alive by checking hit points
@@ -115,7 +110,7 @@ public abstract class DungeonCharacter {
 	---------------------------------------------------------*/
 	public boolean isAlive() {
 		return (hitPoints > 0);
-	}// end isAlive method
+	}
 
 	/*-------------------------------------------------------
 	attack allows character to attempt attack on opponent.  First, chance to hit
@@ -133,14 +128,13 @@ public abstract class DungeonCharacter {
 		if (Math.random() <= chanceToHit) {
 			opponent.subtractHitPoints((int) (Math.random() * (damageMax - damageMin + 1)) + damageMin);
 			System.out.println();
-		} // end if can attack
-		else {
+		} else {
 			System.out.println(name + "'s attack on " + opponent.name + " failed!");
 			System.out.println();
-		} // end else
-	}// end attack method
+		}
+	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
-}// end class Character
+}
