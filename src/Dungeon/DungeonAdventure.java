@@ -1,6 +1,5 @@
 package Dungeon;
 
-import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
@@ -30,8 +29,18 @@ public class DungeonAdventure {
 		System.out.println("you need to hear these.");
 		System.out.println(
 				"The game is simple. You're in a maze. You can move up, down, left, or right, unless you're at the edge.");
+		System.out.println("If you aren't in combat, you can use a health potion.");
 		System.out.println("In any given room you could come across a pit, health, a monster, a pillar, or the exit.");
 		System.out.println("You must have collected all four pillars of OO before you're allowed to exit.");
+		System.out.println("The symbols are as follows:");
+		System.out.println("M - Multiple items");
+		System.out.println("E - Empty room");
+		System.out.println("P - Pit");
+		System.out.println("X - Monster");
+		System.out.println("H - Health Potion");
+		System.out.println("I - Entrance");
+		System.out.println("O - Exit");
+		System.out.println("i - Pillar of OO");
 		System.out.println("That's about it. Enjoy the game.");
 	}
 
@@ -128,6 +137,8 @@ public class DungeonAdventure {
 						if (theHero.getPillars() == 4 && exit()) {
 							System.out
 									.println("You've done it! You've won! What will you do now? Only you can decide!");
+							System.out.println("The dungeon, after you ransacked it:\n");
+							System.out.println(theDungeon.toString());
 							return;
 						} else if (theHero.getPillars() < 4) {
 							System.out.println("This is the exit. Come back when you've collected all the pillars!");

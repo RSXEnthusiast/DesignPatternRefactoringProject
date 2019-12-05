@@ -86,23 +86,7 @@ public class Room {
 			result += "*";
 		}
 		// center
-		if (inRoom.size() > 1) {
-			result += "M";
-		} else if (isPillar()) {
-			result += "i";
-		} else if (inRoom.contains("pit")) {
-			result += "P";
-		} else if (inRoom.contains("heal")) {
-			result += "H";
-		} else if (inRoom.contains("monster")) {
-			result += "X";
-		} else if (inRoom.contains("enter")) {
-			result += "I";
-		} else if (inRoom.contains("exit")) {
-			result += "O";
-		} else {
-			result += "E";
-		}
+		result += getContentsLetter();
 		// right
 		if (doors.contains("e")) {
 			result += "|";
@@ -120,6 +104,26 @@ public class Room {
 		// bottom right
 		result += "*";
 		return result;
+	}
+
+	public String getContentsLetter() {
+		if (inRoom.size() > 1) {
+			return "M";
+		} else if (isPillar()) {
+			return "i";
+		} else if (inRoom.contains("pit")) {
+			return "P";
+		} else if (inRoom.contains("heal")) {
+			return "H";
+		} else if (inRoom.contains("monster")) {
+			return "X";
+		} else if (inRoom.contains("enter")) {
+			return "I";
+		} else if (inRoom.contains("exit")) {
+			return "O";
+		} else {
+			return "E";
+		}
 	}
 
 	private boolean isPillar() {

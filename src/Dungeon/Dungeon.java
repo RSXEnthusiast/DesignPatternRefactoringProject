@@ -83,17 +83,6 @@ public class Dungeon {
 		return false;
 	}
 
-	public String toString() {
-		String result = "";
-		for (Room[] roomRows : rooms) {
-			for (Room room : roomRows) {
-				result += room.toString();
-			}
-			result += "\n";
-		}
-		return result;
-	}
-
 	public Room curRoom() {
 		return rooms[playerX][playerY];
 	}
@@ -128,5 +117,32 @@ public class Dungeon {
 		} else {
 			System.out.println("Congratulations. You just bashed your head into a wall.");
 		}
+	}
+
+	public String toString() {
+		String result = "";
+		for (int i = 0; i < rooms.length * 2 + 1; i++) {
+			result += "*";
+		}
+		for (int i = 0; i < rooms.length; i++) {
+			result += "\n*";
+			for (int j = 0; j < rooms[i].length; j++) {
+				result += rooms[i][j].getContentsLetter();
+				if (j == rooms[i].length - 1) {
+					result += "*\n*";
+				} else {
+					result += "|";
+				}
+			}
+			if (i != rooms.length - 1) {
+				for (int j = 0; j < rooms[i].length; j++) {
+					result += "-*";
+				}
+			}
+		}
+		for (int i = 0; i < rooms.length * 2; i++) {
+			result += "*";
+		}
+		return result;
 	}
 }
