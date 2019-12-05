@@ -45,13 +45,12 @@ public abstract class DungeonCharacter {
 			this.hitPoints -= hitPoints;
 			if (this.hitPoints < 0)
 				this.hitPoints = 0;
-			System.out.println(getName() + " hit " + " for <" + hitPoints + "> points damage.");
-			System.out.println(getName() + " now has " + this.hitPoints + " hit points remaining.");
+			System.out.println(getName() + " took " + hitPoints + " points damage,");
+			System.out.println("and now has " + this.hitPoints + " hit points remaining.");
 			System.out.println();
 		}
-
 		if (this.hitPoints == 0)
-			System.out.println(getName() + " has been killed :-(");
+			System.out.println(getName() + " has been killed.");
 
 	}
 

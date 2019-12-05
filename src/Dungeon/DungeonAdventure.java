@@ -1,21 +1,38 @@
 package Dungeon;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
 
 public class DungeonAdventure {
 	public static void main(String[] args) {
+		explainGame();
 		Hero theHero;
-		Monster theMonster;
 		Dungeon theDungeon;
 		do {
 			int[] size = chooseDungeonSize();
 			theHero = chooseHero();
-			theMonster = generateMonster();
 			theDungeon = new Dungeon(size[0], size[1]);
-			battle(theHero, theMonster, theDungeon);
+			battle(theHero, theDungeon);
 		} while (playAgain());
 		System.out.println("Thanks for playing!");
+	}
+
+	private static void explainGame() {
+		System.out.print("Would you like to hear the rules? Y/N: ");
+		String next = Keyboard.readString().toUpperCase();
+		if (next.equals("N")) {
+			return;
+		}
+		System.out.println(
+				"Either you entered yes or something else, in which case I'm assiming you're dumb enough that");
+		System.out.println("you need to hear these.");
+		System.out.println(
+				"The game is simple. You're in a maze. You can move up, down, left, or right, unless you're at the edge.");
+		System.out.println("In any given room you could come across a pit, health, a monster, a pillar, or the exit.");
+		System.out.println("You must have collected all four pillars of OO before you're allowed to exit.");
+		System.out.println("That's about it. Enjoy the game.");
 	}
 
 	private static int[] chooseDungeonSize() {
@@ -56,22 +73,6 @@ public class DungeonAdventure {
 		}
 	}
 
-	public static Monster generateMonster() {
-		Random rand = new Random();
-		switch (rand.nextInt(5)) {
-		case 0:
-			return new Ogre();
-		case 1:
-			return new Gremlin();
-		case 2:
-			return new Gnat();
-		case 3:
-			return new Leech();
-		default:
-			return new Skeleton();
-		}
-	}
-
 	public static boolean playAgain() {
 		String again;
 		while (true) {
@@ -88,7 +89,114 @@ public class DungeonAdventure {
 		}
 	}
 
-	public static void battle(Hero theHero, Monster theMonster, Dungeon theDungeon) {
-		
+	public static void battle(Hero theHero, Dungeon theDungeon) {
+		do {
+			Queue<String> events = theDungeon.curRoom().getOrderOfEvents();
+			System.out.println(theDungeon.curRoom().toString());
+			if (events.isEmpty()) {
+				System.out.println("The room is empty.");
+			} else {
+				while (!events.isEmpty()) {
+					String curEvent = events.poll();
+					switch (curEvent) {
+					case "pit":
+						theHero.fellInPit();
+						if (!theHero.isAlive()) {
+							events.clear();
+						}
+						break;
+					case "monster":
+						theHero.fight();
+						if (!theHero.isAlive()) {
+							// hero is dead. no more events.
+							events.clear();
+						} else {
+							theDungeon.curRoom().removeThing(curEvent);
+						}
+						System.out.println(theDungeon.curRoom().toString());
+						break;
+					case "heal":
+						theHero.addHealPotion();
+						theDungeon.curRoom().removeThing(curEvent);
+						System.out.println(theDungeon.curRoom().toString());
+						break;
+					case "enter":
+						System.out.println(
+								"This is the entrance. This is where you start. Do you need more explination?");
+						break;
+					case "exit":
+						if (theHero.getPillars() == 4 && exit()) {
+							System.out
+									.println("You've done it! You've won! What will you do now? Only you can decide!");
+							return;
+						} else if (theHero.getPillars() < 4) {
+							System.out.println("This is the exit. Come back when you've collected all the pillars!");
+						} else {
+							System.out.println("Enjoy exploring! Return here to exit when you're ready!");
+						}
+						break;
+					default:
+						System.out.println("You've collected the " + curEvent + " pillar of OO!");
+						theDungeon.curRoom().removeThing(curEvent);
+						theHero.addPillar();
+						if (theHero.getPillars() == 4) {
+							System.out.println("You've got all four pillars! Look for the exit!");
+						}
+						System.out.println(theDungeon.curRoom().toString());
+					}
+				}
+			}
+			if (theHero.isAlive()) {
+				characterChoices(theDungeon, theHero);
+			}
+		} while (theHero.isAlive());
+		System.out.println("Yea, you died. Bummer. Maybe don't do that next time.");
+	}
+
+	private static boolean exit() {
+		while (true) {
+			System.out.print("You've collected all of the pillars of OO, Would you like to leave the dungeon? Y/N: ");
+			String next = Keyboard.readString().toUpperCase();
+			switch (next) {
+			case "Y":
+				return true;
+			case "N":
+				return false;
+			default:
+				System.out.println("Enter Y or N. It isn't that hard.");
+			}
+		}
+	}
+
+	private static void characterChoices(Dungeon theDungeon, Hero theHero) {
+		while (true) {
+			if (theHero.getHealPotions() > 0) {
+				System.out.println("-h to use one of your " + theHero.getHealPotions() + " health potions.");
+			}
+			System.out.println("-n/e/s/w to move.");
+			System.out.print("Make a selection: ");
+			String selection = Keyboard.readString().toLowerCase();
+			switch (selection) {
+			case "n":
+				theDungeon.moveNorth();
+				return;
+			case "e":
+				theDungeon.moveEast();
+				return;
+			case "s":
+				theDungeon.moveSouth();
+				return;
+			case "w":
+				theDungeon.moveWest();
+				return;
+			case "h":
+				if (theHero.getHealPotions() > 0) {
+					theHero.useHealPotion();
+					break;
+				}
+			default:
+				System.out.println("Make a valid selection.");
+			}
+		}
 	}
 }

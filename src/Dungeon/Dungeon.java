@@ -14,8 +14,8 @@ public class Dungeon {
 		Random rand = new Random();
 		// populate array with default rooms
 		for (Room[] roomRows : rooms) {
-			for (Room room : roomRows) {
-				room = new Room();
+			for (int i = 0; i < roomRows.length; i++) {
+				roomRows[i] = new Room();
 			}
 		}
 		// generate pillar locations
@@ -38,7 +38,7 @@ public class Dungeon {
 		specialRoomThings.add("polymorphism");
 		// place pillars
 		for (int[] coords : pillarLocations) {
-			rooms[coords[0]][coords[1]].setContents(specialRoomThings.poll());
+			rooms[coords[0]][coords[1]].addThing(specialRoomThings.poll());
 		}
 		// generate enter and exit locations
 		int[][] enterExitLocations = new int[2][2];
@@ -99,18 +99,34 @@ public class Dungeon {
 	}
 
 	public void moveNorth() {
-		playerY--;
+		if (playerY > 0) {
+			playerY--;
+		} else {
+			System.out.println("Congratulations. You just bashed your head into a wall.");
+		}
 	}
 
 	public void moveEast() {
-		playerX++;
+		if (playerX < rooms[0].length - 1) {
+			playerX++;
+		} else {
+			System.out.println("Congratulations. You just bashed your head into a wall.");
+		}
 	}
 
 	public void moveSouth() {
-		playerY++;
+		if (playerY < rooms.length - 1) {
+			playerY++;
+		} else {
+			System.out.println("Congratulations. You just bashed your head into a wall.");
+		}
 	}
 
 	public void moveWest() {
-		playerX--;
+		if (playerX > 0) {
+			playerX--;
+		} else {
+			System.out.println("Congratulations. You just bashed your head into a wall.");
+		}
 	}
 }

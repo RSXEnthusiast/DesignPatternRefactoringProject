@@ -1,6 +1,7 @@
 package Dungeon;
 
 import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 import javax.swing.plaf.synth.SynthSplitPaneUI;
@@ -18,10 +19,6 @@ public class Room {
 	public Room() {
 		inRoom = new LinkedList<String>();
 		Random rand = new Random();
-		// healing
-		if (rand.nextInt(100) <= chanceOfHeal) {
-			addThing("heal");
-		}
 		// pit
 		if (rand.nextInt(100) <= chanceOfPit) {
 			addThing("pit");
@@ -30,6 +27,11 @@ public class Room {
 		if (rand.nextInt(100) <= chanceOfMonster) {
 			addThing("monster");
 		}
+		// healing
+		if (rand.nextInt(100) <= chanceOfHeal) {
+			addThing("heal");
+		}
+		doors = new LinkedList<String>();
 		// doors
 		doors.add("n");
 		doors.add("e");
@@ -126,5 +128,17 @@ public class Room {
 			return true;
 		}
 		return false;
+	}
+
+	public Queue<String> getOrderOfEvents() {
+		Queue<String> order = new LinkedList<String>();
+		for (String string : inRoom) {
+			order.add(string);
+		}
+		return order;
+	}
+
+	public void removeThing(String curEvent) {
+		inRoom.remove(curEvent);
 	}
 }

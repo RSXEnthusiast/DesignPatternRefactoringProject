@@ -1,5 +1,7 @@
 package Dungeon;
 
+import java.util.Random;
+
 public abstract class Hero extends DungeonCharacter {
 	private double chanceToBlock;
 	private int numTurns;
@@ -10,6 +12,8 @@ public abstract class Hero extends DungeonCharacter {
 			double chanceToBlock) {
 		super(readName(), hitPoints, attackSpeed, chanceToHit, damageMin, damageMax);
 		this.chanceToBlock = chanceToBlock;
+		this.healPotions = 0;
+		this.pillarsFound = 0;
 	}
 
 	public static String readName() {
@@ -32,7 +36,7 @@ public abstract class Hero extends DungeonCharacter {
 	public void battleChoices(DungeonCharacter opponent) {
 		setNumTurns(getAttackSpeed() / opponent.getAttackSpeed());
 		if (getNumTurns() == 0) {
-			setNumTurns(getNumTurns() + 1);
+			setNumTurns(1);
 		}
 		System.out.println("Number of turns this round is: " + getNumTurns());
 	}
@@ -47,5 +51,71 @@ public abstract class Hero extends DungeonCharacter {
 
 	public String toString() {
 		return super.toString() + "\nHealing Potions: " + healPotions + "\nPillars of OO found: " + pillarsFound;
+	}
+
+	public void fellInPit() {
+		Random rand = new Random();
+		int damage = rand.nextInt(20) + 1;
+		System.out.println(super.getName() + " fell in a pit.");
+		super.subtractHitPoints(damage);
+	}
+
+	public void fight() {
+		Monster monster = generateMonster();
+		System.out.println(getName() + " battles " + monster.getName());
+		System.out.println("---------------------------------------------");
+		while (isAlive() && monster.isAlive()) {
+			battleChoices(monster);
+			if (monster.isAlive()) {
+				monster.attack(this);
+				monster.heal();
+			} else {
+				System.out.println(getName() + " was victorious!");
+				return;
+			}
+		}
+		System.out.println(getName() + " was defeated.");
+	}
+
+	public static Monster generateMonster() {
+		Random rand = new Random();
+		switch (rand.nextInt(5)) {
+		case 0:
+			return new Ogre();
+		case 1:
+			return new Gremlin();
+		case 2:
+			return new Gnat();
+		case 3:
+			return new Leech();
+		default:
+			return new Skeleton();
+		}
+	}
+
+	public void addHealPotion() {
+		healPotions++;
+		System.out.println("You gained a heal potion!");
+	}
+
+	public void addPillar() {
+		pillarsFound++;
+	}
+
+	public int getPillars() {
+		return pillarsFound;
+	}
+
+	public int getHealPotions() {
+		return healPotions;
+	}
+
+	public void useHealPotion() {
+		Random rand = new Random();
+		int heal = rand.nextInt(10) + 10;
+		System.out.println(super.getName() + " healed for " + heal + "HP,");
+		System.out.println("and now has " + getHitPoints() + " HP left.");
+		addHitPoints(heal);
+		healPotions--;
 	}
 }
