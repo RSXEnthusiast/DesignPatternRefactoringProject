@@ -10,7 +10,6 @@ public class DungeonAdventure {
 			theHero = chooseHero();
 			theMonster = generateMonster();
 			battle(theHero, theMonster);
-
 		} while (playAgain());
 		System.out.println("Thanks for playing!");
 	}
@@ -18,7 +17,8 @@ public class DungeonAdventure {
 	public static Hero chooseHero() {
 		int choice;
 		while (true) {
-			System.out.print("Choose a hero:\n1. Warrior\n2. Sorceress\n3. Thief\nMake a selection: ");
+			System.out.print(
+					"Choose a hero:\n1. Warrior\n2. Sorceress\n3. Thief\n4. Commoner\n5. Witch\nMake a selection: ");
 			choice = Keyboard.readInt();
 			switch (choice) {
 			case 1:
@@ -27,6 +27,10 @@ public class DungeonAdventure {
 				return new Sorceress();
 			case 3:
 				return new Thief();
+			case 4:
+				return new Commoner();
+			case 5:
+				return new Witch();
 			default:
 				System.out.println("invalid choice, try again.\n");
 			}
@@ -35,11 +39,15 @@ public class DungeonAdventure {
 
 	public static Monster generateMonster() {
 		Random rand = new Random();
-		switch (rand.nextInt(3)) {
+		switch (rand.nextInt(5)) {
 		case 0:
 			return new Ogre();
 		case 1:
 			return new Gremlin();
+		case 2:
+			return new Gnat();
+		case 3:
+			return new Leech();
 		default:
 			return new Skeleton();
 		}
