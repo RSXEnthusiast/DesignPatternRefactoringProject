@@ -1,17 +1,36 @@
 package Dungeon;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class DungeonAdventure {
 	public static void main(String[] args) {
 		Hero theHero;
 		Monster theMonster;
+		Dungeon theDungeon;
 		do {
+			int[] size = chooseDungeonSize();
 			theHero = chooseHero();
 			theMonster = generateMonster();
-			battle(theHero, theMonster);
+			theDungeon = new Dungeon(size[0], size[1]);
+			battle(theHero, theMonster, theDungeon);
 		} while (playAgain());
 		System.out.println("Thanks for playing!");
+	}
+
+	private static int[] chooseDungeonSize() {
+		while (true) {
+			System.out.print("Enter a dungeon size in the format \"x y\" here: ");
+			Scanner scanner = new Scanner(System.in);
+			try {
+				int[] result = new int[2];
+				result[0] = Integer.parseInt(scanner.next());
+				result[1] = Integer.parseInt(scanner.next());
+				return result;
+			} catch (NumberFormatException e) {
+				System.out.println("Enter numbers.");
+			}
+		}
 	}
 
 	public static Hero chooseHero() {
@@ -69,7 +88,7 @@ public class DungeonAdventure {
 		}
 	}
 
-	public static void battle(Hero theHero, Monster theMonster) {
-
+	public static void battle(Hero theHero, Monster theMonster, Dungeon theDungeon) {
+		
 	}
 }

@@ -94,6 +94,10 @@ public class Dungeon {
 		return result;
 	}
 
+	public Room curRoom() {
+		return rooms[playerX][playerY];
+	}
+
 	public void moveNorth() {
 		playerY--;
 	}
