@@ -1,3 +1,4 @@
+package Dungeon;
 public class Skeleton extends Monster {
 
 	private final static String name = "Sargath the Skeleton";

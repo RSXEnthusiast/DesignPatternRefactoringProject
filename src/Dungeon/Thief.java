@@ -1,3 +1,4 @@
+package Dungeon;
 public class Thief extends Hero {
 
 	private final static int hitPoints = 75;

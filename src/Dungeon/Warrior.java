@@ -1,3 +1,4 @@
+package Dungeon;
 public class Warrior extends Hero {
 
 	private final static int hitPoints = 125;
