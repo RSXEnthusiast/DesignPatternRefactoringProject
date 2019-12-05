@@ -1,3 +1,4 @@
+package Dungeon;
 public class Gremlin extends Monster {
 	
 	private final static String name = "Gnarltooth the Gremlin";

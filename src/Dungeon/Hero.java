@@ -1,3 +1,4 @@
+package Dungeon;
 /**
  * Title: Hero.java
  *

@@ -1,3 +1,4 @@
+package Dungeon;
 public class Ogre extends Monster {
 
 	private final static String name = "Oscar the Ogre";
