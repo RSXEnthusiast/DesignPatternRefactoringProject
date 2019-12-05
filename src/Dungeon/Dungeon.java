@@ -6,6 +6,8 @@ import java.util.Random;
 
 public class Dungeon {
 	private Room[][] rooms;
+	private int playerX;
+	private int playerY;
 
 	public Dungeon(int sizeX, int sizeY) {
 		rooms = new Room[sizeX][sizeY];
@@ -16,7 +18,6 @@ public class Dungeon {
 				room = new Room();
 			}
 		}
-		// remove doors at edges
 		// generate pillar locations
 		int[][] pillarLocations = new int[4][2];
 		for (int[] thisLoc : pillarLocations) {
@@ -58,6 +59,8 @@ public class Dungeon {
 		for (int[] coords : enterExitLocations) {
 			rooms[coords[0]][coords[1]].setContents(specialRoomThings.poll());
 		}
+		playerX = enterExitLocations[0][0];
+		playerY = enterExitLocations[0][1];
 		// removing doors around edges
 		for (Room room : rooms[0]) {
 			room.removeDoor("w");
@@ -78,5 +81,32 @@ public class Dungeon {
 			}
 		}
 		return false;
+	}
+
+	public String toString() {
+		String result = "";
+		for (Room[] roomRows : rooms) {
+			for (Room room : roomRows) {
+				result += room.toString();
+			}
+			result += "\n";
+		}
+		return result;
+	}
+
+	public void moveNorth() {
+		playerY--;
+	}
+
+	public void moveEast() {
+		playerX++;
+	}
+
+	public void moveSouth() {
+		playerY++;
+	}
+
+	public void moveWest() {
+		playerX--;
 	}
 }
