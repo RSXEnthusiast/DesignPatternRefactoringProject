@@ -1,12 +1,13 @@
 package Dungeon;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
 import javax.swing.plaf.synth.SynthSplitPaneUI;
 
-public class Room {
+public class Room implements Serializable {
 	private final double chanceOfHeal = 10;
 	private final double chanceOfPit = 10;
 	private final double chanceOfMonster = 10;

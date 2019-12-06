@@ -1,11 +1,12 @@
 package Dungeon;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
-public class Dungeon {
+public class Dungeon implements Serializable{
 	private Room[][] rooms;
 	private int playerX;
 	private int playerY;

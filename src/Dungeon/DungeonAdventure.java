@@ -1,33 +1,84 @@
 package Dungeon;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Queue;
 import java.util.Scanner;
 
 public class DungeonAdventure {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		explainGame();
-		if (saveExists()) {
-			
-		}
-		Hero theHero;
-		Dungeon theDungeon;
+		Hero theHero = null;
+		Dungeon theDungeon = null;
 		do {
-			int[] size = chooseDungeonSize();
-			theHero = chooseHero();
-			theDungeon = new Dungeon(size[0], size[1]);
+			boolean saveGame = false;
+			if (isSaveGame() && yesOrNo("Would you like to load your saved game? Y/N: ")) {
+				theDungeon = loadDungeon();
+				theHero = loadHero();
+				saveGame = true;
+			}
+			if (!saveGame) {
+				int[] size = chooseDungeonSize();
+				theHero = chooseHero();
+				theDungeon = new Dungeon(size[0], size[1]);
+			}
 			battle(theHero, theDungeon);
 		} while (playAgain());
 		System.out.println("Thanks for playing!");
 	}
 
-	private static boolean saveExists() {
-		File file = new File("saveGame.txt");
+	private static boolean yesOrNo(String q) {
+		while (true) {
+			System.out.print(q);
+			Scanner scanner = new Scanner(System.in);
+			String sel = scanner.next().toUpperCase();
+			switch (sel) {
+			case "Y":
+				return true;
+			case "N":
+				return false;
+			default:
+				System.out.println("Make a valid selection.");
+			}
+		}
+	}
+
+	private static Dungeon loadDungeon() {
+		try {
+			ObjectInputStream inD = new ObjectInputStream(new FileInputStream("savedD.txt"));
+			Dungeon dun = (Dungeon) inD.readObject();
+			inD.close();
+			return dun;
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private static Hero loadHero() {
+		try {
+			ObjectInputStream inH = new ObjectInputStream(new FileInputStream("savedH.txt"));
+			Hero hero = (Hero) inH.readObject();
+			inH.close();
+			return hero;
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private static boolean isSaveGame() {
+		File file = new File("savedD.txt");
 		if (file.exists()) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	private static void explainGame() {
@@ -156,6 +207,12 @@ public class DungeonAdventure {
 									.println("You've done it! You've won! What will you do now? Only you can decide!");
 							System.out.println("The dungeon, after you ransacked it:\n");
 							System.out.println(theDungeon.toString());
+							File file1 = new File("savedD.txt");
+							File file2 = new File("savedH.txt");
+							System.out.println(file1.exists());
+							System.out.println(file2.exists());
+							file1.delete();
+							file2.delete();
 							return;
 						} else if (theHero.getPillars() < 4) {
 							System.out.println("This is the exit. Come back when you've collected all the pillars!");
@@ -202,23 +259,26 @@ public class DungeonAdventure {
 			if (theHero.getHealPotions() > 0) {
 				System.out.println("-h to use one of your " + theHero.getHealPotions() + " health potions.");
 			}
-			System.out.println("-s to save and quit.");
-			System.out.println("-n/e/s/w to move.");
+			System.out.println("-z to save and quit.");
+			System.out.println("-w/a/s/d to move.");
 			System.out.print("Make a selection: ");
 			String selection = Keyboard.readString().toLowerCase();
 			switch (selection) {
-			case "n":
+			case "w":
 				theDungeon.moveNorth();
 				return;
-			case "e":
+			case "d":
 				theDungeon.moveEast();
 				return;
 			case "s":
 				theDungeon.moveSouth();
 				return;
-			case "w":
+			case "a":
 				theDungeon.moveWest();
 				return;
+			case "z":
+				saveGame(theDungeon, theHero);
+				break;
 			case "h":
 				if (theHero.getHealPotions() > 0) {
 					theHero.useHealPotion();
@@ -228,5 +288,23 @@ public class DungeonAdventure {
 				System.out.println("Make a valid selection.");
 			}
 		}
+	}
+
+	private static void saveGame(Dungeon theDungeon, Hero theHero) {
+		if (isSaveGame() && !yesOrNo("Would you like to overwrite your previous save? Y/N: ")) {
+			return;
+		}
+		try {
+			ObjectOutputStream outD = new ObjectOutputStream(new FileOutputStream("savedD.txt"));
+			ObjectOutputStream outH = new ObjectOutputStream(new FileOutputStream("savedH.txt"));
+			outD.writeObject(theDungeon);
+			outH.writeObject(theHero);
+			outD.close();
+			outH.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Save successful! Bye!");
+		System.exit(0);
 	}
 }
