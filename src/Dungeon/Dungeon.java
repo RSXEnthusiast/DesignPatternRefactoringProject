@@ -1,5 +1,6 @@
 package Dungeon;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -20,12 +21,17 @@ public class Dungeon {
 		}
 		// generate pillar locations
 		int[][] pillarLocations = new int[4][2];
+		for (int[] coords : pillarLocations) {
+			for (int i = 0; i < coords.length; i++) {
+				coords[i] = -1;
+			}
+		}
 		for (int[] thisLoc : pillarLocations) {
-			int x = rand.nextInt(sizeX - 1);
-			int y = rand.nextInt(sizeY - 1);
+			int x = rand.nextInt(sizeX);
+			int y = rand.nextInt(sizeY);
 			while (contains(pillarLocations, x, y)) {
-				x = rand.nextInt(sizeX - 1);
-				y = rand.nextInt(sizeY - 1);
+				x = rand.nextInt(sizeX);
+				y = rand.nextInt(sizeY);
 			}
 			thisLoc[0] = x;
 			thisLoc[1] = y;
@@ -42,12 +48,17 @@ public class Dungeon {
 		}
 		// generate enter and exit locations
 		int[][] enterExitLocations = new int[2][2];
+		for (int[] coords : enterExitLocations) {
+			for (int i = 0; i < coords.length; i++) {
+				coords[i] = -1;
+			}
+		}
 		for (int[] thisLoc : enterExitLocations) {
-			int x = rand.nextInt(sizeX - 1);
-			int y = rand.nextInt(sizeY - 1);
+			int x = rand.nextInt(sizeX);
+			int y = rand.nextInt(sizeY);
 			while (contains(pillarLocations, x, y) || contains(enterExitLocations, x, y)) {
-				x = rand.nextInt(sizeX - 1);
-				y = rand.nextInt(sizeY - 1);
+				x = rand.nextInt(sizeX);
+				y = rand.nextInt(sizeY);
 			}
 			thisLoc[0] = x;
 			thisLoc[1] = y;
@@ -96,7 +107,7 @@ public class Dungeon {
 	}
 
 	public void moveEast() {
-		if (playerX < rooms[0].length - 1) {
+		if (playerX < rooms.length - 1) {
 			playerX++;
 		} else {
 			System.out.println("Congratulations. You just bashed your head into a wall.");
@@ -104,7 +115,7 @@ public class Dungeon {
 	}
 
 	public void moveSouth() {
-		if (playerY < rooms.length - 1) {
+		if (playerY < rooms[0].length - 1) {
 			playerY++;
 		} else {
 			System.out.println("Congratulations. You just bashed your head into a wall.");
@@ -124,18 +135,18 @@ public class Dungeon {
 		for (int i = 0; i < rooms.length * 2 + 1; i++) {
 			result += "*";
 		}
-		for (int i = 0; i < rooms.length; i++) {
+		for (int i = 0; i < rooms[0].length; i++) {
 			result += "\n*";
-			for (int j = 0; j < rooms[i].length; j++) {
-				result += rooms[i][j].getContentsLetter();
-				if (j == rooms[i].length - 1) {
+			for (int j = 0; j < rooms.length; j++) {
+				result += rooms[j][i].getContentsLetter();
+				if (j == rooms.length - 1) {
 					result += "*\n*";
 				} else {
 					result += "|";
 				}
 			}
-			if (i != rooms.length - 1) {
-				for (int j = 0; j < rooms[i].length; j++) {
+			if (i != rooms[0].length - 1) {
+				for (int j = 0; j < rooms.length; j++) {
 					result += "-*";
 				}
 			}

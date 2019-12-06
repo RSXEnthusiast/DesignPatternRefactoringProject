@@ -1,11 +1,15 @@
 package Dungeon;
 
+import java.io.File;
 import java.util.Queue;
 import java.util.Scanner;
 
 public class DungeonAdventure {
 	public static void main(String[] args) {
 		explainGame();
+		if (saveExists()) {
+			
+		}
 		Hero theHero;
 		Dungeon theDungeon;
 		do {
@@ -15,6 +19,15 @@ public class DungeonAdventure {
 			battle(theHero, theDungeon);
 		} while (playAgain());
 		System.out.println("Thanks for playing!");
+	}
+
+	private static boolean saveExists() {
+		File file = new File("saveGame.txt");
+		if (file.exists()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private static void explainGame() {
@@ -45,12 +58,17 @@ public class DungeonAdventure {
 
 	private static int[] chooseDungeonSize() {
 		while (true) {
-			System.out.print("Enter a dungeon size in the format \"x y\" here: ");
-			Scanner scanner = new Scanner(System.in);
 			try {
 				int[] result = new int[2];
-				result[0] = Integer.parseInt(scanner.next());
-				result[1] = Integer.parseInt(scanner.next());
+				while (result[0] * result[1] < 6) {
+					System.out.print("Enter a dungeon size in the format \"x y\" here: ");
+					Scanner scanner = new Scanner(System.in);
+					result[0] = Integer.parseInt(scanner.next());
+					result[1] = Integer.parseInt(scanner.next());
+					if (result[0] * result[1] < 6) {
+						System.out.println("Your dungeon is too small. It needs to hae at least 6 rooms.");
+					}
+				}
 				return result;
 			} catch (NumberFormatException e) {
 				System.out.println("Enter numbers.");
@@ -130,7 +148,7 @@ public class DungeonAdventure {
 						break;
 					case "enter":
 						System.out.println(
-								"This is the entrance. This is where you start. Do you need more explination?");
+								"This is the entrance. This is where you start. Do you need more explanation?");
 						break;
 					case "exit":
 						if (theHero.getPillars() == 4 && exit()) {
@@ -161,6 +179,7 @@ public class DungeonAdventure {
 			}
 		} while (theHero.isAlive());
 		System.out.println("Yea, you died. Bummer. Maybe don't do that next time.");
+		System.out.println(theDungeon.toString());
 	}
 
 	private static boolean exit() {
@@ -183,6 +202,7 @@ public class DungeonAdventure {
 			if (theHero.getHealPotions() > 0) {
 				System.out.println("-h to use one of your " + theHero.getHealPotions() + " health potions.");
 			}
+			System.out.println("-s to save and quit.");
 			System.out.println("-n/e/s/w to move.");
 			System.out.print("Make a selection: ");
 			String selection = Keyboard.readString().toLowerCase();
