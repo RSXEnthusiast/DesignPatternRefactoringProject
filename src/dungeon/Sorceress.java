@@ -1,6 +1,6 @@
-package Dungeon;
+package dungeon;
 public class Sorceress extends Hero {
-
+	private static final long serialVersionUID = 830380330378118847L;
 	private final static int hitPoints = 75;
 	private final static int attackSpeed = 5;
 	private final static double chanceToHit = .7;

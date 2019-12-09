@@ -1,5 +1,6 @@
-package Dungeon;
+package dungeon;
 public abstract class Monster extends DungeonCharacter {
+	private static final long serialVersionUID = -5316362071433110280L;
 	protected double chanceToHeal;
 	protected int minHeal, maxHeal;
 

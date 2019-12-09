@@ -1,4 +1,4 @@
-package Dungeon;
+package dungeon;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,7 +47,7 @@ public class DungeonAdventure {
 		}
 	}
 
-	private static Dungeon loadDungeon() {
+	public static Dungeon loadDungeon() {
 		try {
 			ObjectInputStream inD = new ObjectInputStream(new FileInputStream("savedD.txt"));
 			Dungeon dun = (Dungeon) inD.readObject();
@@ -60,7 +60,7 @@ public class DungeonAdventure {
 		return null;
 	}
 
-	private static Hero loadHero() {
+	public static Hero loadHero() {
 		try {
 			ObjectInputStream inH = new ObjectInputStream(new FileInputStream("savedH.txt"));
 			Hero hero = (Hero) inH.readObject();
@@ -78,6 +78,7 @@ public class DungeonAdventure {
 		if (file.exists()) {
 			return true;
 		}
+		file.delete();
 		return false;
 	}
 
@@ -209,8 +210,6 @@ public class DungeonAdventure {
 							System.out.println(theDungeon.toString());
 							File file1 = new File("savedD.txt");
 							File file2 = new File("savedH.txt");
-							System.out.println(file1.exists());
-							System.out.println(file2.exists());
 							file1.delete();
 							file2.delete();
 							return;
@@ -278,7 +277,7 @@ public class DungeonAdventure {
 				return;
 			case "z":
 				saveGame(theDungeon, theHero);
-				break;
+				System.exit(0);
 			case "h":
 				if (theHero.getHealPotions() > 0) {
 					theHero.useHealPotion();
@@ -290,7 +289,7 @@ public class DungeonAdventure {
 		}
 	}
 
-	private static void saveGame(Dungeon theDungeon, Hero theHero) {
+	public static void saveGame(Dungeon theDungeon, Hero theHero) {
 		if (isSaveGame() && !yesOrNo("Would you like to overwrite your previous save? Y/N: ")) {
 			return;
 		}
@@ -305,6 +304,5 @@ public class DungeonAdventure {
 			e.printStackTrace();
 		}
 		System.out.println("Save successful! Bye!");
-		System.exit(0);
 	}
 }

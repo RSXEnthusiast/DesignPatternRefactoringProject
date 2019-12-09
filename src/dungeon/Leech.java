@@ -1,7 +1,7 @@
-package Dungeon;
+package dungeon;
 
 public class Leech extends Monster {
-
+	private static final long serialVersionUID = -5614890026581420768L;
 	private final static String name = "Sargath the Skeleton";
 	private final static int hitPoints = 10;
 	private final static int attackSpeed = 5;

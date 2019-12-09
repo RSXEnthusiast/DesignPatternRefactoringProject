@@ -1,4 +1,4 @@
-package Dungeon;
+package dungeon;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -8,6 +8,7 @@ import java.util.Random;
 import javax.swing.plaf.synth.SynthSplitPaneUI;
 
 public class Room implements Serializable {
+	private static final long serialVersionUID = -720726509227419545L;
 	private final double chanceOfHeal = 10;
 	private final double chanceOfPit = 10;
 	private final double chanceOfMonster = 10;
@@ -136,8 +137,21 @@ public class Room implements Serializable {
 	}
 
 	public Queue<String> getOrderOfEvents() {
+		LinkedList<String> temp = new LinkedList<String>(inRoom);
 		Queue<String> order = new LinkedList<String>();
-		for (String string : inRoom) {
+		if (temp.contains("pit")) {
+			order.add("pit");
+			temp.remove("pit");
+		}
+		if (temp.contains("monster")) {
+			order.add("monster");
+			temp.remove("monster");
+		}
+		if (temp.contains("heal")) {
+			order.add("heal");
+			temp.remove("heal");
+		}
+		for (String string : temp) {
 			order.add(string);
 		}
 		return order;
@@ -145,5 +159,17 @@ public class Room implements Serializable {
 
 	public void removeThing(String curEvent) {
 		inRoom.remove(curEvent);
+	}
+
+	public LinkedList<String> getInRoom() {
+		return inRoom;
+	}
+
+	public void clearRoom() {
+		inRoom.clear();
+	}
+
+	public LinkedList<String> getDoors() {
+		return doors;
 	}
 }

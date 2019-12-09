@@ -1,15 +1,15 @@
-package Dungeon;
+package dungeon;
 
-public class Witch extends Hero {
+public class Commoner extends Hero {
+	private static final long serialVersionUID = 2315532553629284741L;
+	private final static int hitPoints = 75;
+	private final static int attackSpeed = 2;
+	private final static double chanceToHit = .4;
+	private final static int damageMin = 20;
+	private final static int damageMax = 40;
+	private final static double chanceToBlock = .4;
 
-	private final static int hitPoints = 125;
-	private final static int attackSpeed = 4;
-	private final static double chanceToHit = .8;
-	private final static int damageMin = 35;
-	private final static int damageMax = 60;
-	private final static double chanceToBlock = .2;
-
-	public Witch() {
+	public Commoner() {
 		super(hitPoints, attackSpeed, chanceToHit, damageMin, damageMax, chanceToBlock);
 	}
 
@@ -20,7 +20,7 @@ public class Witch extends Hero {
 			boolean valid = false;
 			while (!valid) {
 				System.out.println("1. Attack Opponent");
-				System.out.println("2. Use Black Magic on Opponent");
+				System.out.println("2. Lucky Hit on Opponent");
 				System.out.print("Choose an option: ");
 				choice = Keyboard.readInt();
 				switch (choice) {
@@ -29,7 +29,7 @@ public class Witch extends Hero {
 					valid = true;
 					break;
 				case 2:
-					blackMagic(opponent);
+					luckyHit(opponent);
 					valid = true;
 					break;
 				default:
@@ -44,14 +44,13 @@ public class Witch extends Hero {
 		} while (getNumTurns() > 0 && getHitPoints() > 0 && opponent.getHitPoints() > 0);
 	}
 
-	public void blackMagic(DungeonCharacter opponent) {
-		if (Math.random() <= .4) {
-			int blowPoints = (int) (Math.random() * 76) + 100;
-			System.out.println(
-					getName() + " hits " + opponent.getName() + " with black magic for " + blowPoints + " damage!");
+	public void luckyHit(DungeonCharacter opponent) {
+		if (Math.random() <= .1) {
+			int blowPoints = (int) (Math.random() * 150) + 100;
+			System.out.println(getName() + " lands a lucky hit for " + blowPoints + " damage!");
 			opponent.subtractHitPoints(blowPoints);
 		} else {
-			System.out.println(getName() + " failed to use black magic\n");
+			System.out.println(getName() + " was un-lucky\n");
 		}
 	}
 }

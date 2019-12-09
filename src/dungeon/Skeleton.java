@@ -1,6 +1,6 @@
-package Dungeon;
+package dungeon;
 public class Skeleton extends Monster {
-
+	private static final long serialVersionUID = 2822440767123994225L;
 	private final static String name = "Sargath the Skeleton";
 	private final static int hitPoints = 100;
 	private final static int attackSpeed = 3;

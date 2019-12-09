@@ -1,9 +1,9 @@
-package Dungeon;
+package dungeon;
 
 import java.io.Serializable;
 
 public abstract class DungeonCharacter implements Serializable {
-
+	private static final long serialVersionUID = -2044731269655360374L;
 	private String name;
 	private int hitPoints;
 	private int attackSpeed;

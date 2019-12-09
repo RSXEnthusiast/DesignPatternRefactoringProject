@@ -1,6 +1,6 @@
-package Dungeon;
+package dungeon;
 public class Thief extends Hero {
-
+	private static final long serialVersionUID = -8768947636451705373L;
 	private final static int hitPoints = 75;
 	private final static int attackSpeed = 6;
 	private final static double chanceToHit = .8;

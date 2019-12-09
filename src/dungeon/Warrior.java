@@ -1,6 +1,7 @@
-package Dungeon;
-public class Warrior extends Hero {
+package dungeon;
 
+public class Warrior extends Hero {
+	private static final long serialVersionUID = -3547540862196006538L;
 	private final static int hitPoints = 125;
 	private final static int attackSpeed = 4;
 	private final static double chanceToHit = .8;
@@ -10,6 +11,10 @@ public class Warrior extends Hero {
 
 	public Warrior() {
 		super(hitPoints, attackSpeed, chanceToHit, damageMin, damageMax, chanceToBlock);
+	}
+
+	public Warrior(String name) {
+		super(name, hitPoints, attackSpeed, chanceToHit, damageMin, damageMax, chanceToBlock);
 	}
 
 	public void battleChoices(DungeonCharacter opponent) {

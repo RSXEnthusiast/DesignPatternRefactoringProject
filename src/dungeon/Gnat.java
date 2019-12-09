@@ -1,7 +1,7 @@
-package Dungeon;
+package dungeon;
 
 public class Gnat extends Monster {
-
+	private static final long serialVersionUID = 2093659130020719482L;
 	private final static String name = "Matt the gnat";
 	private final static int hitPoints = 1;
 	private final static int attackSpeed = 10;

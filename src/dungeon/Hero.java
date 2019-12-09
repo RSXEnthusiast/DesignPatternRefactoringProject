@@ -1,8 +1,9 @@
-package Dungeon;
+package dungeon;
 
 import java.util.Random;
 
 public abstract class Hero extends DungeonCharacter {
+	private static final long serialVersionUID = 7246227628651766785L;
 	private double chanceToBlock;
 	private int numTurns;
 	private int healPotions;
@@ -11,6 +12,14 @@ public abstract class Hero extends DungeonCharacter {
 	public Hero(int hitPoints, int attackSpeed, double chanceToHit, int damageMin, int damageMax,
 			double chanceToBlock) {
 		super(readName(), hitPoints, attackSpeed, chanceToHit, damageMin, damageMax);
+		this.chanceToBlock = chanceToBlock;
+		this.healPotions = 0;
+		this.pillarsFound = 0;
+	}
+	
+	public Hero(String name,int hitPoints, int attackSpeed, double chanceToHit, int damageMin, int damageMax,
+			double chanceToBlock) {
+		super(name, hitPoints, attackSpeed, chanceToHit, damageMin, damageMax);
 		this.chanceToBlock = chanceToBlock;
 		this.healPotions = 0;
 		this.pillarsFound = 0;

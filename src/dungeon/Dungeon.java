@@ -1,12 +1,12 @@
-package Dungeon;
+package dungeon;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
-public class Dungeon implements Serializable{
+public class Dungeon implements Serializable {
+	private static final long serialVersionUID = -3532566332016735961L;
 	private Room[][] rooms;
 	private int playerX;
 	private int playerY;
@@ -15,7 +15,7 @@ public class Dungeon implements Serializable{
 		rooms = new Room[sizeX][sizeY];
 		Random rand = new Random();
 		// populate array with default rooms
-		for (Room[] roomRows : rooms) {
+		for (Room[] roomRows : getRooms()) {
 			for (int i = 0; i < roomRows.length; i++) {
 				roomRows[i] = new Room();
 			}
@@ -45,7 +45,7 @@ public class Dungeon implements Serializable{
 		specialRoomThings.add("polymorphism");
 		// place pillars
 		for (int[] coords : pillarLocations) {
-			rooms[coords[0]][coords[1]].addThing(specialRoomThings.poll());
+			getRooms()[coords[0]][coords[1]].addThing(specialRoomThings.poll());
 		}
 		// generate enter and exit locations
 		int[][] enterExitLocations = new int[2][2];
@@ -69,24 +69,24 @@ public class Dungeon implements Serializable{
 		specialRoomThings.add("exit");
 		// place enter and exit
 		for (int[] coords : enterExitLocations) {
-			rooms[coords[0]][coords[1]].setContents(specialRoomThings.poll());
+			getRooms()[coords[0]][coords[1]].setContents(specialRoomThings.poll());
 		}
 		playerX = enterExitLocations[0][0];
 		playerY = enterExitLocations[0][1];
 		// removing doors around edges
-		for (Room room : rooms[0]) {
+		for (Room room : getRooms()[0]) {
 			room.removeDoor("w");
 		}
-		for (Room room : rooms[rooms.length - 1]) {
+		for (Room room : getRooms()[getRooms().length - 1]) {
 			room.removeDoor("e");
 		}
-		for (Room[] roomRows : rooms) {
+		for (Room[] roomRows : getRooms()) {
 			roomRows[0].removeDoor("n");
 			roomRows[roomRows.length - 1].removeDoor("s");
 		}
 	}
 
-	private boolean contains(int[][] pillarLocations, int x, int y) {
+	public boolean contains(int[][] pillarLocations, int x, int y) {
 		for (int[] coords : pillarLocations) {
 			if (coords[0] == x && coords[1] == y) {
 				return true;
@@ -96,7 +96,7 @@ public class Dungeon implements Serializable{
 	}
 
 	public Room curRoom() {
-		return rooms[playerX][playerY];
+		return getRooms()[playerX][playerY];
 	}
 
 	public void moveNorth() {
@@ -108,7 +108,7 @@ public class Dungeon implements Serializable{
 	}
 
 	public void moveEast() {
-		if (playerX < rooms.length - 1) {
+		if (playerX < getRooms().length - 1) {
 			playerX++;
 		} else {
 			System.out.println("Congratulations. You just bashed your head into a wall.");
@@ -116,7 +116,7 @@ public class Dungeon implements Serializable{
 	}
 
 	public void moveSouth() {
-		if (playerY < rooms[0].length - 1) {
+		if (playerY < getRooms()[0].length - 1) {
 			playerY++;
 		} else {
 			System.out.println("Congratulations. You just bashed your head into a wall.");
@@ -133,28 +133,53 @@ public class Dungeon implements Serializable{
 
 	public String toString() {
 		String result = "";
-		for (int i = 0; i < rooms.length * 2 + 1; i++) {
+		// top
+		for (int i = 0; i < getRooms().length * 2 + 1; i++) {
 			result += "*";
 		}
-		for (int i = 0; i < rooms[0].length; i++) {
+		// rows
+		for (int i = 0; i < getRooms()[0].length; i++) {
 			result += "\n*";
-			for (int j = 0; j < rooms.length; j++) {
-				result += rooms[j][i].getContentsLetter();
-				if (j == rooms.length - 1) {
+			// rooms in row
+			for (int j = 0; j < getRooms().length; j++) {
+				result += getRooms()[j][i].getContentsLetter();
+				if (j == getRooms().length - 1) { // end of row
 					result += "*\n*";
-				} else {
+				} else { // not end of row
 					result += "|";
 				}
 			}
-			if (i != rooms[0].length - 1) {
-				for (int j = 0; j < rooms.length; j++) {
+			// between rows
+			if (i != getRooms()[0].length - 1) { // not last row
+				for (int j = 0; j < getRooms().length; j++) {
 					result += "-*";
 				}
 			}
 		}
-		for (int i = 0; i < rooms.length * 2; i++) {
+		// bottom
+		for (int i = 0; i < getRooms().length * 2; i++) {
 			result += "*";
 		}
 		return result;
+	}
+
+	public Room[][] getRooms() {
+		return rooms;
+	}
+
+	public void setPlayerX(int i) {
+		playerX = i;
+	}
+
+	public void setPlayerY(int i) {
+		playerY = i;
+	}
+
+	public int getPlayerX() {
+		return playerX;
+	}
+
+	public int getPlayerY() {
+		return playerY;
 	}
 }
