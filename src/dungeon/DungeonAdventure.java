@@ -26,7 +26,7 @@ public class DungeonAdventure {
 				theHero = chooseHero();
 				theDungeon = new Dungeon(size[0], size[1]);
 			}
-			battle(theHero, theDungeon);
+			playGame(theDungeon, theHero);
 		} while (playAgain());
 		System.out.println("Thanks for playing!");
 	}
@@ -47,7 +47,7 @@ public class DungeonAdventure {
 		}
 	}
 
-	public static Dungeon loadDungeon() {
+	static Dungeon loadDungeon() {
 		try {
 			ObjectInputStream inD = new ObjectInputStream(new FileInputStream("savedD.txt"));
 			Dungeon dun = (Dungeon) inD.readObject();
@@ -60,7 +60,7 @@ public class DungeonAdventure {
 		return null;
 	}
 
-	public static Hero loadHero() {
+	static Hero loadHero() {
 		try {
 			ObjectInputStream inH = new ObjectInputStream(new FileInputStream("savedH.txt"));
 			Hero hero = (Hero) inH.readObject();
@@ -117,8 +117,18 @@ public class DungeonAdventure {
 					Scanner scanner = new Scanner(System.in);
 					result[0] = Integer.parseInt(scanner.next());
 					result[1] = Integer.parseInt(scanner.next());
-					if (result[0] * result[1] < 6) {
-						System.out.println("Your dungeon is too small. It needs to hae at least 6 rooms.");
+					if (result[0] < 1 || result[1] < 1) {
+						System.out.println("Enter positive numbers.");
+						result[0] = 0;
+					} else if (result[0] * result[1] < 6) {
+						System.out.println("Your dungeon is too small. It needs to have at least 6 rooms.");
+					} else if (result[0] * result[1] > 1000) {
+						System.out.println("You dungeon is too massive. It must be 1000 rooms or less.");
+						result[0] = 0;
+					} else if (result[0] * result[1] > 50) {
+						if (!yesOrNo("Your dungeon is massive, are you sure you'd like to continue? Y/N: ")) {
+							result[0] = 0;
+						}
 					}
 				}
 				return result;
@@ -128,7 +138,7 @@ public class DungeonAdventure {
 		}
 	}
 
-	public static Hero chooseHero() {
+	private static Hero chooseHero() {
 		int choice;
 		while (true) {
 			System.out.print(
@@ -151,7 +161,7 @@ public class DungeonAdventure {
 		}
 	}
 
-	public static boolean playAgain() {
+	private static boolean playAgain() {
 		String again;
 		while (true) {
 			System.out.print("Play again (Y/N): ");
@@ -167,7 +177,7 @@ public class DungeonAdventure {
 		}
 	}
 
-	public static void battle(Hero theHero, Dungeon theDungeon) {
+	private static void playGame(Dungeon theDungeon, Hero theHero) {
 		do {
 			Queue<String> events = theDungeon.curRoom().getOrderOfEvents();
 			System.out.println(theDungeon.curRoom().toString());
@@ -177,12 +187,14 @@ public class DungeonAdventure {
 				while (!events.isEmpty()) {
 					String curEvent = events.poll();
 					switch (curEvent) {
+
 					case "pit":
 						theHero.fellInPit();
 						if (!theHero.isAlive()) {
 							events.clear();
 						}
 						break;
+
 					case "monster":
 						theHero.fight();
 						if (!theHero.isAlive()) {
@@ -193,15 +205,18 @@ public class DungeonAdventure {
 						}
 						System.out.println(theDungeon.curRoom().toString());
 						break;
+
 					case "heal":
 						theHero.addHealPotion();
 						theDungeon.curRoom().removeThing(curEvent);
 						System.out.println(theDungeon.curRoom().toString());
 						break;
+
 					case "enter":
 						System.out.println(
 								"This is the entrance. This is where you start. Do you need more explanation?");
 						break;
+
 					case "exit":
 						if (theHero.getPillars() == 4 && exit()) {
 							System.out
@@ -219,6 +234,7 @@ public class DungeonAdventure {
 							System.out.println("Enjoy exploring! Return here to exit when you're ready!");
 						}
 						break;
+
 					default:
 						System.out.println("You've collected the " + curEvent + " pillar of OO!");
 						theDungeon.curRoom().removeThing(curEvent);
@@ -289,7 +305,7 @@ public class DungeonAdventure {
 		}
 	}
 
-	public static void saveGame(Dungeon theDungeon, Hero theHero) {
+	static void saveGame(Dungeon theDungeon, Hero theHero) {
 		if (isSaveGame() && !yesOrNo("Would you like to overwrite your previous save? Y/N: ")) {
 			return;
 		}

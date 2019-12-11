@@ -13,10 +13,6 @@ public class Warrior extends Hero {
 		super(hitPoints, attackSpeed, chanceToHit, damageMin, damageMax, chanceToBlock);
 	}
 
-	public Warrior(String name) {
-		super(name, hitPoints, attackSpeed, chanceToHit, damageMin, damageMax, chanceToBlock);
-	}
-
 	public void battleChoices(DungeonCharacter opponent) {
 		int choice;
 		super.battleChoices(opponent);

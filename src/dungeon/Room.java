@@ -139,17 +139,19 @@ public class Room implements Serializable {
 	public Queue<String> getOrderOfEvents() {
 		LinkedList<String> temp = new LinkedList<String>(inRoom);
 		Queue<String> order = new LinkedList<String>();
-		if (temp.contains("pit")) {
-			order.add("pit");
-			temp.remove("pit");
-		}
-		if (temp.contains("monster")) {
-			order.add("monster");
-			temp.remove("monster");
-		}
-		if (temp.contains("heal")) {
-			order.add("heal");
-			temp.remove("heal");
+		while (temp.size() > 1) {
+			if (temp.contains("pit")) {
+				order.add("pit");
+				temp.remove("pit");
+			}
+			if (temp.contains("monster")) {
+				order.add("monster");
+				temp.remove("monster");
+			}
+			if (temp.contains("heal")) {
+				order.add("heal");
+				temp.remove("heal");
+			}
 		}
 		for (String string : temp) {
 			order.add(string);

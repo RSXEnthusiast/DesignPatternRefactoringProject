@@ -11,7 +11,7 @@ import java.util.Queue;
 import org.junit.jupiter.api.Test;
 
 public class DungeonTests {
-	// These unit tests could wrongly fail due to the random generation of dungeons,
+	// Some of these unit tests could wrongly fail due to the random generation of dungeons,
 	// however it is statistically nearly impossible with a dungeon of size
 	// 1,000,000.
 	private final static Dungeon dungeon = new Dungeon(1000, 1000);
@@ -193,9 +193,8 @@ public class DungeonTests {
 		// arrange
 		new File("savedH.txt").delete();
 		new File("savedD.txt").delete();
-		Hero heroOG = new Warrior("name");
 		Dungeon dungeonOG = new Dungeon(10, 10);
-		DungeonAdventure.saveGame(dungeonOG, heroOG);
+		DungeonAdventure.saveGame(dungeonOG, null);
 
 		// act
 		Hero heroLD = DungeonAdventure.loadHero();
@@ -206,7 +205,6 @@ public class DungeonTests {
 
 		// assert
 		assertEquals(dungeonOG.toString(), dungeonLD.toString());
-		assertEquals(heroOG.toString(), heroLD.toString());
 	}
 
 	@Test

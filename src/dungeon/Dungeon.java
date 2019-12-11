@@ -86,7 +86,7 @@ public class Dungeon implements Serializable {
 		}
 	}
 
-	public boolean contains(int[][] pillarLocations, int x, int y) {
+	boolean contains(int[][] pillarLocations, int x, int y) {
 		for (int[] coords : pillarLocations) {
 			if (coords[0] == x && coords[1] == y) {
 				return true;

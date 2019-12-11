@@ -1,4 +1,5 @@
 package dungeon;
+
 public class Gremlin extends Monster {
 	private static final long serialVersionUID = 251843182983536332L;
 	private final static String name = "Gnarltooth the Gremlin";

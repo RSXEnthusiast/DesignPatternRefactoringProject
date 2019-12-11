@@ -16,14 +16,6 @@ public abstract class Hero extends DungeonCharacter {
 		this.healPotions = 0;
 		this.pillarsFound = 0;
 	}
-	
-	public Hero(String name,int hitPoints, int attackSpeed, double chanceToHit, int damageMin, int damageMax,
-			double chanceToBlock) {
-		super(name, hitPoints, attackSpeed, chanceToHit, damageMin, damageMax);
-		this.chanceToBlock = chanceToBlock;
-		this.healPotions = 0;
-		this.pillarsFound = 0;
-	}
 
 	public static String readName() {
 		System.out.print("Enter character name: ");
